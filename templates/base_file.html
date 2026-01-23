@@ -1,0 +1,33 @@
+{#
+This is the
+templates/base_file.html
+This i make for the whole full page base file from which i will
+think to extends this file
+#}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block my_title %}
+    Wishlist Default Title
+    {% endblock %}
+</head>
+
+<body>
+
+
+    {% include 'partials/_navbar.html' %}
+
+    <hr>
+
+    {% block my_content %}
+
+    {% endblock %}
+
+</body>
+
+</html>

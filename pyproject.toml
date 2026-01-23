@@ -1,0 +1,12 @@
+[project]
+name = "wiselist-web-app"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14.2"
+dependencies = [
+    "flask>=3.1.2",
+    "flask-login>=0.6.3",
+    "flask-wtf>=1.2.2",
+    "sqlmodel>=0.0.31",
+]
