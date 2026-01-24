@@ -1,0 +1,48 @@
+{#
+This is the file here i will shows the register page to the user
+blueprints/auth/templates/auth/register_page.html
+#}
+
+{% extends 'base_file.html' %}
+
+{% block my_title %}
+Register For a new Account
+{% endblock %}
+
+
+{% block my_content %}
+<h1 class="m-4 text-center">Register Your new account here</h1>
+<hr class="border-5 border-danger">
+
+
+<form action="" method="post">
+
+    {{ form.hidden_tag() }}
+
+    {{ form.first_name.label() }}
+    {{ form.first_name() }}
+
+    {{ form.last_name.label() }}
+    {{ form.last_name() }}
+
+    {{ form.phone_no.label() }}
+    {{ form.phone_no() }}
+
+    {{ form.email_id.label() }}
+    {{ form.email_id() }}
+
+    {{ form.username.label() }}
+    {{ form.username() }}
+
+    {{ form.password.label() }}
+    {{ form.password() }}
+
+    {{ form.submit() }}
+
+
+</form>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{#
+this is the file just for now i will show the register form data
+blueprints/auth/templates/auth/show_data.html
+#}
+{% extends "base_file.html" %}
+
+{% block my_title %}
+Show the demo register data
+{% endblock %}
+
+
+{% block my_content %}
+<h3>Submitted Data</h3>
+
+<ul class="list-group">
+    <li class="list-group-item">First Name: {{ data.first_name }}</li>
+    <li class="list-group-item">Last Name: {{ data.last_name }}</li>
+    <li class="list-group-item">Phone: {{ data.phone_no }}</li>
+    <li class="list-group-item">Email: {{ data.email_id }}</li>
+    <li class="list-group-item">Username: {{ data.username }}</li>
+</ul>
+{% endblock %}

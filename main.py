@@ -11,6 +11,7 @@ sys.dont_write_bytecode = True
 from flask import Flask
 
 
+from blueprints.auth.routes import auth_bp
 from blueprints.general.routes import general_bp
 
 from utils.config_settings import (
@@ -30,7 +31,7 @@ app = Flask(
 
 app.config["SECRET_KEY"] = SECRET_KEY
 
-
+app.register_blueprint(blueprint=auth_bp)
 app.register_blueprint(blueprint=general_bp)
 
 
