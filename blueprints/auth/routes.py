@@ -16,7 +16,7 @@ from blueprints.auth.forms import RegisterForm
 auth_bp = Blueprint(
     name="auth_bp",
     import_name=__name__,
-    template_folder="templates/auth",
+    template_folder="templates",
 )
 
 
@@ -40,7 +40,7 @@ def register():
     else:
         print(form.errors)
         return render_template(
-            template_name_or_list="register_page.html",
+            template_name_or_list="auth/register_page.html",
             form=form,
         )
 
@@ -52,5 +52,5 @@ def login():
     where user will write the username and password
     """
     return render_template(
-        template_name_or_list="login_page.html",
+        template_name_or_list="auth/login_page.html",
     )

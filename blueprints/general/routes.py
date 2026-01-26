@@ -14,7 +14,7 @@ from flask import (
 general_bp = Blueprint(
     name="general_bp",
     import_name=__name__,
-    template_folder="templates/general",
+    template_folder="templates",
 )
 
 
@@ -30,24 +30,26 @@ def checking():
     flash("🌑 Dark Message", "dark")
 
     return render_template(
-        template_name_or_list="checking.html",
+        template_name_or_list="general/checking.html",
     )
 
 
 @general_bp.route("/")
 def index():
-    return render_template("index.html")
+    return render_template(
+        template_name_or_list="general/index.html",
+    )
 
 
 @general_bp.route("/about")
 def about():
     return render_template(
-        template_name_or_list="about_page.html",
+        template_name_or_list="general/about_page.html",
     )
 
 
 @general_bp.route("/help")
 def help():
     return render_template(
-        template_name_or_list="help_page.html",
+        template_name_or_list="general/help_page.html",
     )
