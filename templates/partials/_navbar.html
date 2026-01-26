@@ -2,7 +2,6 @@
 Thsi is the templates/partials/_navbar.html
 this is where i will keep the navbar for the website
 #}
-
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{url_for('general_bp.index')}}">
@@ -19,14 +18,10 @@ this is where i will keep the navbar for the website
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                 </li>
-                #}
-
-                {#
                 <li class="nav-item">
                     <a class="nav-link" href="#">Link</a>
                 </li>
                 #}
-
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -38,6 +33,8 @@ this is where i will keep the navbar for the website
                         <li><a class="dropdown-item" href="{{url_for('general_bp.help')}}">>❓ Help Page</a></li>
                         <li><a class="dropdown-item" href="{{url_for('auth_bp.register')}}">📝 Register Here</a></li>
                         <li><a class="dropdown-item" href="{{url_for('auth_bp.login')}}">📝 Login Here</a></li>
+                        <li><a class="dropdown-item" href="{{url_for('general_bp.checking')}}">Checking(For Development
+                                Only)</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

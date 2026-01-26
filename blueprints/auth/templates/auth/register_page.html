@@ -19,28 +19,40 @@ Register For a new Account
 
     {{ form.hidden_tag() }}
 
-    {{ form.first_name.label() }}
-    {{ form.first_name() }}
+    <div class="mb-2">
+        {{ form.first_name.label(class="form-label fw-bold") }}
+        {{ form.first_name(class="form-control w-50") }}
+    </div>
 
-    {{ form.last_name.label() }}
-    {{ form.last_name() }}
+    <div class="mb-2">
+        {{ form.last_name.label(class="form-label fw-bold") }}
+        {{ form.last_name(class="form-control w-50") }}
+    </div>
 
-    {{ form.phone_no.label() }}
-    {{ form.phone_no() }}
+    <div class="mb-2">
+        {{ form.phone_no.label(class="form-label fw-bold") }}
+        {{ form.phone_no(class="form-control w-50") }}
+    </div>
 
-    {{ form.email_id.label() }}
-    {{ form.email_id() }}
+    <div class="mb-2">
+        {{ form.email_id.label(class="form-label fw-bold") }}
+        {{ form.email_id(class="form-control w-50") }}
+    </div>
 
-    {{ form.username.label() }}
-    {{ form.username() }}
+    <div class="mb-2">
+        {{ form.username.label(class="form-label fw-bold") }}
+        {{ form.username(class="form-control w-50") }}
+    </div>
 
-    {{ form.password.label() }}
-    {{ form.password() }}
+    <div class="mb-2">
+        {{ form.password.label(class="form-label fw-bold") }}
+        {{ form.password(class="form-control w-50") }}
+    </div>
 
     {{ form.submit() }}
 
-
 </form>
+
 
 
 

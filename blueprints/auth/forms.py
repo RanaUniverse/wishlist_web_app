@@ -32,24 +32,26 @@ class RegisterForm(FlaskForm):
     )
     phone_no = StringField(
         label="Phone Number",
+        render_kw={"placeholder": "Example: +91 9876598765"},
         validators=[Optional(), Length(min=10, max=15)],
     )
     email_id = StringField(
         label="Email Address",
+        render_kw={"placeholder": "Example: example@example.com"},
         validators=[Optional(), Email()],
     )
     username = StringField(
         label="Unique Username",
-        validators=[DataRequired(), Length(min=1, max=10)],
-        render_kw={"placeholder": "You Must need to enter"},
+        validators=[DataRequired(), Length(min=3, max=20)],
+        render_kw={"placeholder": "Must Need (Minimum 3 Characters)"},
     )
     password = PasswordField(
         label="Password",
-        render_kw={"placeholder": "You Must need to enter"},
+        render_kw={"placeholder": "Must Need (Minimum 5 Characters)"},
         validators=[
             DataRequired(),
             Length(
-                min=3,
+                min=5,
                 message="Password must be at least 3 characters long",
             ),
         ],
