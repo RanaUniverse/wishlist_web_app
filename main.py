@@ -14,6 +14,9 @@ from flask import Flask
 from blueprints.auth.routes import auth_bp
 from blueprints.general.routes import general_bp
 
+
+from db_codes.db_make import create_db_and_engine
+
 from utils.config_settings import (
     FLASK_DEBUG,
     FLASK_HOST,
@@ -36,6 +39,7 @@ app.register_blueprint(blueprint=general_bp)
 
 
 if __name__ == "__main__":
+    create_db_and_engine()
     app.run(
         host=FLASK_HOST,
         port=FLASK_PORT,

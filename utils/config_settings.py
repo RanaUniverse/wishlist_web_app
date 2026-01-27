@@ -20,4 +20,4 @@ LOG_FILE_NAME = "web_app.log"
 
 
 # The sqlite file name for database is below
-DATABASE_FILE_NAME = "database.db"
+SQLITE_DATABASE_FILE_NAME = "database.db"

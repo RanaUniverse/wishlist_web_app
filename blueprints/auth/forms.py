@@ -16,15 +16,14 @@ from wtforms.validators import (
     DataRequired,
     Optional,
     Length,
-    Email,
 )
 
 
 class RegisterForm(FlaskForm):
     first_name = StringField(
         label="First Name",
-        render_kw={"placeholder": "You Must need to enter"},
         validators=[DataRequired()],
+        render_kw={"placeholder": "You Must need to enter"},
     )
     last_name = StringField(
         label="Last Name",
@@ -32,8 +31,8 @@ class RegisterForm(FlaskForm):
     )
     phone_no = StringField(
         label="Phone Number",
-        render_kw={"placeholder": "Example: +91 9876598765"},
         validators=[Optional(), Length(min=10, max=15)],
+        render_kw={"placeholder": "Example: +91 9876598765"},
     )
     username = StringField(
         label="Unique Username",
@@ -42,14 +41,14 @@ class RegisterForm(FlaskForm):
     )
     password = PasswordField(
         label="Password",
-        render_kw={"placeholder": "Must Need (Minimum 5 Characters)"},
         validators=[
             DataRequired(),
             Length(
-                min=5,
+                min=3,
                 message="Password must be at least 3 characters long",
             ),
         ],
+        render_kw={"placeholder": "Must Need (Minimum 3 Characters)"},
     )
     submit = SubmitField(
         label="Register Here",
