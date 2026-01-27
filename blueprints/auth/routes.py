@@ -10,13 +10,13 @@ from flask import (
 )
 
 
-from blueprints.auth.forms import RegisterForm
+from blueprints.auth.forms import RegisterForm, LoginForm
 
 
 auth_bp = Blueprint(
     name="auth_bp",
     import_name=__name__,
-    template_folder="templates/auth",
+    template_folder="templates",
 )
 
 
@@ -28,19 +28,18 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():  # type: ignore
         return render_template(
-            "show_data.html",
+            "auth/show_data.html",
             data={
                 "first_name": form.first_name.data,
                 "last_name": form.last_name.data,
                 "phone_no": form.phone_no.data,
-                "email_id": form.email_id.data,
                 "username": form.username.data,
             },
         )
     else:
         print(form.errors)
         return render_template(
-            template_name_or_list="register_page.html",
+            template_name_or_list="auth/register_page.html",
             form=form,
         )
 
@@ -51,6 +50,9 @@ def login():
     This fun will shows the login page to user
     where user will write the username and password
     """
+    form = LoginForm()
+
     return render_template(
-        template_name_or_list="login_page.html",
+        template_name_or_list="auth/login_page.html",
+        form=form,
     )

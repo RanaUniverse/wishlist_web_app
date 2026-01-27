@@ -1,13 +1,39 @@
 {#
 This is the file to shows the login page to the user
 blueprints/auth/templates/auth/login_page.html
+form = loginform i will pass here
 #}
 
-<div class="mb-3">
-    <label for="exampleInputEmail" class="form-label">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail" placeholder="name@example.com">
-</div>
-<div class="mb-3">
-    <label for="exampleInputEmail" class="form-label">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail" placeholder="name@example.com">
-</div>
+{% extends 'base_file.html' %}
+
+{% block my_title %}
+Let's Login Your Account
+{% endblock %}
+
+{% block my_content %}
+<h1>Please Login Your Account to see your content.</h1>
+
+<form action="" method="post">
+
+    {{ form.hidden_tag() }}
+
+    <div class="m-3">
+        {{ form.username.label(class="form-label fw-bold") }}
+        {{ form.username(class="form-control w-50") }}
+    </div>
+
+    <div class="m-3">
+        {{ form.password.label(class="form-label fw-bold") }}
+        {{ form.password(class="form-control w-50") }}
+    </div>
+
+    {{ form.submit() }}
+
+
+
+
+
+
+</form>
+
+{% endblock %}
