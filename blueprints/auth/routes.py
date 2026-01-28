@@ -6,11 +6,18 @@ here i will write the register related informations
 
 from flask import (
     Blueprint,
+    flash,
     render_template,
 )
 
 
 from blueprints.auth.forms import RegisterForm, LoginForm
+
+from db_codes.functions import add_new_user, find_user_obj_from_username
+from db_codes.db_make import engine
+
+
+from utils.custom_logger import logger
 
 
 auth_bp = Blueprint(
@@ -24,20 +31,89 @@ auth_bp = Blueprint(
 def register():
     """
     This fun is for the showing the register page to a new user
+    When i will get the data form user i will try to check
+    if the username is already there in the db,if already say user this
+    else start register this...
     """
     form = RegisterForm()
     if form.validate_on_submit():  # type: ignore
-        return render_template(
-            "auth/show_data.html",
-            data={
-                "first_name": form.first_name.data,
-                "last_name": form.last_name.data,
-                "phone_no": form.phone_no.data,
-                "username": form.username.data,
-            },
+
+        first_name = form.first_name.data
+        username = form.username.data
+        password = form.username.data
+
+        # if not all([first_name, username, password]):
+        if first_name is None or username is None or password is None:
+            logger.error(
+                "Form validation passed, but one or more required fields are None "
+                "(first_name, username, password)"
+            )
+            flash(message="Something went wrong. Please try again.", category="danger")
+
+            return render_template(
+                template_name_or_list="auth/register_page.html",
+                form=form,
+            )
+        # I make this upper part just for adding one extra validation which i though
+        # can be problem i need to think about this what is the problme or solution later
+
+        existing_user = find_user_obj_from_username(
+            db_engine=engine,
+            username=username,
         )
+        if existing_user:
+            flash(
+                message=f"The username **{username}** is already taken by another one "
+                "Please Choose any other username",
+                category="danger",
+            )
+            return render_template(
+                template_name_or_list="auth/register_page.html",
+                form=form,
+            )
+
+        new_user = add_new_user(
+            db_engine=engine,
+            first_name=first_name,
+            last_name=form.last_name.data,
+            phone_no=form.phone_no.data,
+            username=username,
+            password=password,
+        )
+        if not new_user:
+            flash(
+                message="Something wrong when try to register you in our Database"
+                "Make a complain to the Admin in the /help section",
+                category="warning",
+            )
+            return render_template(
+                template_name_or_list="auth/register_page.html",
+                form=form,
+            )
+        else:
+            # means the new_user has been successfully insert in the db
+            # i am now showing the data later i will need to use the db below
+            flash(
+                message="For Reference it is showing the data now...",
+                category="success",
+            )
+            flash(
+                message="Your information has been saved in the database",
+                category="success",
+            )
+            return render_template(
+                "auth/show_data.html",
+                data={
+                    "first_name": form.first_name.data,
+                    "last_name": form.last_name.data,
+                    "phone_no": form.phone_no.data,
+                    "username": form.username.data,
+                },
+            )
+
+    # This else part is when i get a /register Get from user
     else:
-        print(form.errors)
+        flash(message="Let's Create Your Account", category="primary")
         return render_template(
             template_name_or_list="auth/register_page.html",
             form=form,

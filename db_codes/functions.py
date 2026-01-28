@@ -5,10 +5,13 @@ modules to work some about the databases
 """
 
 from sqlalchemy import Engine
+from sqlalchemy.exc import IntegrityError
 
 from sqlmodel import Session, select
 
 from db_codes.models import UserModel, WishItemModel
+
+from utils.custom_logger import logger
 
 
 def find_user_obj_from_username(
@@ -18,8 +21,8 @@ def find_user_obj_from_username(
     with Session(db_engine) as session:
         statement = select(UserModel).where(UserModel.username == username)
         results = session.exec(statement)
-        user_obj = results.one()
-        return user_obj
+        user_obj = results.one_or_none()
+    return user_obj
 
 
 def add_new_user(
@@ -33,6 +36,7 @@ def add_new_user(
     """
     I wish i will provide one user details and it will
     insert the user data in the table and say me if not wrong
+    if the user not insert in the db i will return none
     """
 
     with Session(db_engine) as session:
@@ -43,9 +47,24 @@ def add_new_user(
             username=username,
             password=password,
         )
-        session.add(user_obj)
-        session.commit()
-        return user_obj
+        try:
+            session.add(user_obj)
+            session.commit()
+            session.refresh(user_obj)
+            return user_obj
+
+        except IntegrityError as e:
+            logger.warning(
+                "there is some integrity problem in the username column maybe" f"{e}"
+            )
+            return None
+
+        except Exception as e:
+            logger.warning(
+                "Somethings wrong in db level has happens, when i try to add the user in the db"
+                f"{e}"
+            )
+            return None
 
 
 def add_new_wish_item(
@@ -71,4 +90,5 @@ def add_new_wish_item(
         )
         session.add(wish_obj)
         session.commit()
-        return wish_obj
+        session.refresh(wish_obj)
+    return wish_obj

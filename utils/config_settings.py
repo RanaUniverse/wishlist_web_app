@@ -12,6 +12,7 @@ SECRET_KEY = "RanaUniverse"
 
 # I did this below if true it will shows log in console
 # otherwise if false it will not shows in console
+# For local testing i will want this below to be True to shows the info in the temrinal
 enable_console_logging: bool = True
 
 
