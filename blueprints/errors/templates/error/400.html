@@ -1,0 +1,29 @@
+{#
+blueprints/errors/templates/error/400.html
+Thsi file i keep to send on 400 error
+here i will pass the show_msg = HTTPException ie BadRequest
+this is so good i need to pass the values
+
+show_msg
+
+#}
+
+{% extends 'base_file.html' %}
+
+{% block my_title %}
+Something went wrong
+{% endblock %}
+
+{% block my_content %}
+<h1>400 :-> Bad Request</h1>
+
+
+{% if show_msg %}
+<div class="alert alert-danger">
+    {{ show_msg }}
+</div>
+{% endif %}
+
+
+
+{% endblock %}

@@ -13,7 +13,7 @@ from flask import Flask
 
 from blueprints.auth.routes import auth_bp
 from blueprints.general.routes import general_bp
-
+from blueprints.errors.routes import error_bp
 
 from db_codes.db_make import create_db_and_engine
 
@@ -35,6 +35,7 @@ app = Flask(
 app.config["SECRET_KEY"] = SECRET_KEY
 
 app.register_blueprint(blueprint=auth_bp)
+app.register_blueprint(blueprint=error_bp)
 app.register_blueprint(blueprint=general_bp)
 
 
