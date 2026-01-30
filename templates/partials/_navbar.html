@@ -2,6 +2,9 @@
 Thsi is the templates/partials/_navbar.html
 this is where i will keep the navbar for the website
 #}
+
+{% from 'partials/_search_placeholder.html' import search_placeholder with context %}
+
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{url_for('general_bp.index')}}">
@@ -13,43 +16,11 @@ this is where i will keep the navbar for the website
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                {#
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                #}
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Dropdown Items
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{url_for('general_bp.about')}}">ℹ️ About Page</a></li>
-                        <li><a class="dropdown-item" href="{{url_for('general_bp.help')}}">>❓ Help Page</a></li>
-                        <li><a class="dropdown-item" href="{{url_for('auth_bp.register')}}">📝 Register Here</a></li>
-                        <li><a class="dropdown-item" href="{{url_for('auth_bp.login')}}">🔐 Login Here</a></li>
-                        <li><a class="dropdown-item" href="{{url_for('general_bp.checking')}}">🧪 Checking(For Development
-                                Only)</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="https://github.com/RanaUniverse/wishlist_web_app"
-                                target="_blank">
-                                🖥️ Source Code
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
+                {% include 'partials/_navbar_dropdown.html' %}
             </ul>
             <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                <input class="form-control me-2" type="search" placeholder="{{ search_placeholder() }}"
+                    aria-label="Search" />
                 <button class="btn btn-outline-success" type="submit">Search (Not Working)</button>
             </form>
         </div>

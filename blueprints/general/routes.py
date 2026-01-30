@@ -10,6 +10,7 @@ from flask import (
     render_template,
 )
 
+from flask_login import login_required  # type: ignore
 
 general_bp = Blueprint(
     name="general_bp",
@@ -52,4 +53,12 @@ def about():
 def help():
     return render_template(
         template_name_or_list="general/help_page.html",
+    )
+
+
+@general_bp.route("/profile")
+@login_required
+def profile():
+    return render_template(
+        template_name_or_list="general/profile_page.html",
     )

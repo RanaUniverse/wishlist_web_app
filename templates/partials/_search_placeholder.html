@@ -1,0 +1,16 @@
+{#
+templates/partials/_search_placeholder.html
+This is the file i want to keep the serach bar text Here
+#}
+
+{% macro search_placeholder() %}
+
+
+{% if current_user.is_authenticated %}
+Hello {{ current_user.username }} - what will you search today?
+{% else %}
+Hello Guest Search Here?
+{% endif %}
+
+
+{% endmacro %}

@@ -32,3 +32,20 @@ No blueprints, no dmin access, no complicated CSS (use bootstrap, its pre-made) 
 
 Just build the app, the simplest it can be - but also completly functional
 ```
+
+
+## How This web's work flow:
+
+First User see the index.html page form general_bp.
+
+User want to register he will feel the /register page in auth_bp.
+
+After this register it will redirect to /login and user need to enter the right id password to login here in the /login route in the same auth_bp.
+
+
+
+## Some Plan to impliment
+
+the username now for lowercase and uppercase are treated differently i need to make it same for upper and lower case.
+
+For now on login it saves the session for lifetime i need to add the remember me or not later.

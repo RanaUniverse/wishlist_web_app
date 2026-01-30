@@ -14,6 +14,51 @@ from db_codes.models import UserModel, WishItemModel
 from utils.custom_logger import logger
 
 
+def verify_login_credentials(
+    db_engine: Engine,
+    username: str,
+    password: str,
+) -> UserModel | None:
+    """
+    Here i will pass the user's db's username and password
+    it will check if correct it will send the user_obj or None otherwise
+    """
+    with Session(db_engine) as session:
+        statement = select(UserModel).where(UserModel.username == username)
+        results = session.exec(statement)
+        user_obj = results.one_or_none()
+
+        if not user_obj:
+            logger.info(f"{username} is not present in the user table.")
+            return None
+
+        if user_obj.password == password:
+            logger.debug(
+                f"{username} and the password has been matched now for some way"
+            )
+            return user_obj
+
+        else:
+            logger.info(f"{username} and password not matched now.")
+            return None
+
+
+def find_user_obj_from_user_id(
+    db_engine: Engine,
+    user_id: str,
+) -> UserModel | None:
+    """
+    If the user exists it will send the user obj
+    else it will send None
+    """
+    with Session(db_engine) as session:
+        # i think later i need to do something to check if the user_id can be make as int or not
+        statement = select(UserModel).where(UserModel.id_ == int(user_id))
+        results = session.exec(statement)
+        user_obj = results.one_or_none()
+    return user_obj
+
+
 def find_user_obj_from_username(
     db_engine: Engine,
     username: str,

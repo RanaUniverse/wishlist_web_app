@@ -3,6 +3,8 @@ db_codes/models.py
 in this file i will create the logics of the models of what what i will have
 """
 
+from flask_login import UserMixin  # type: ignore
+
 from sqlmodel import (
     Field,
     Relationship,
@@ -10,7 +12,7 @@ from sqlmodel import (
 )
 
 
-class UserModel(SQLModel, table=True):
+class UserModel(SQLModel, UserMixin, table=True):
     """
     For now i am saving the password as plain str
     later i need to change this must
@@ -27,6 +29,15 @@ class UserModel(SQLModel, table=True):
 
     wish_items: list["WishItemModel"] = Relationship(back_populates="user")
 
+    def get_id(self) -> str:
+        """
+        This is the method which will run by the flask-login
+        it will get the unique identificaiton per user thats why i make this
+        as the docs say this here-
+        https://flask-login.readthedocs.io/en/latest/#your-user-class
+        """
+        return str(self.id_)
+
 
 class WishItemModel(SQLModel, table=True):
     """
@@ -42,5 +53,5 @@ class WishItemModel(SQLModel, table=True):
     link: str
 
     user_id: int | None = Field(default=None, foreign_key="user_data.id_")
-    
+
     user: UserModel = Relationship(back_populates="wish_items")

@@ -1,0 +1,38 @@
+{#
+templates/partials/_navbar_dropdown.html
+This is a file i want to make it stay here and call in teh _navbar.html part
+#}
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        🚀 Explore More Items 💫
+    </a>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="{{url_for('general_bp.about')}}">ℹ️ About Page</a></li>
+        <li><a class="dropdown-item" href="{{url_for('general_bp.help')}}">❓ Help Page</a></li>
+        <li><a class="dropdown-item" href="{{url_for('general_bp.profile')}}">👤 Your Profile</a></li>
+
+
+
+        {% if current_user.is_authenticated %}
+        <li><a class="dropdown-item" href="{{url_for('auth_bp.logout')}}">👋 Logout Here</a></li>
+
+        {% else %}
+        <li><a class="dropdown-item" href="{{url_for('auth_bp.register')}}">📝 Register As New User Here</a></li>
+        <li><a class="dropdown-item" href="{{url_for('auth_bp.login')}}">🔐 Login Your Account</a></li>
+
+        {% endif %}
+
+
+        <li><a class="dropdown-item" href="{{url_for('general_bp.checking')}}">🧪 Checking(For
+                Development
+                Only)</a></li>
+        <li>
+            <hr class="dropdown-divider">
+        </li>
+        <li>
+            <a class="dropdown-item" href="https://github.com/RanaUniverse/wishlist_web_app" target="_blank">
+                🖥️ Source Code
+            </a>
+        </li>
+    </ul>
+</li>
