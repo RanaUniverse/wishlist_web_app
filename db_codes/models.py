@@ -3,6 +3,9 @@ db_codes/models.py
 in this file i will create the logics of the models of what what i will have
 """
 
+from uuid import uuid4
+
+
 from flask_login import UserMixin  # type: ignore
 
 from sqlmodel import (
@@ -10,6 +13,11 @@ from sqlmodel import (
     Relationship,
     SQLModel,
 )
+
+
+
+def generate_hex_uuid4() -> str:
+    return str(uuid4().hex)
 
 
 class UserModel(SQLModel, UserMixin, table=True):
@@ -51,6 +59,8 @@ class WishItemModel(SQLModel, table=True):
     name: str
     price: float
     link: str
+
+    uuid: str = Field(default_factory=generate_hex_uuid4, unique=True)
 
     user_id: int | None = Field(default=None, foreign_key="user_data.id_")
 

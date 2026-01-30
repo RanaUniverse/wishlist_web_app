@@ -1,0 +1,62 @@
+{#
+blueprints/wishlist/templates/wishlist/one_wish_item.html
+Shows a single wish item in a clean Bootstrap 5 card
+#}
+
+{% extends 'base_file.html' %}
+
+{% block my_title %}
+My Wish Item
+{% endblock %}
+
+{% block my_content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">🎁 Your Wish Item</h5>
+                </div>
+
+                <div class="card-body">
+                    <h4 class="card-title mb-3 text-center">
+                        {{ wish_obj.name }}
+                    </h4>
+
+                    <p class="card-text">
+                        <strong>Price:</strong>
+                        ₹ {{ wish_obj.price }}
+                    </p>
+
+                    {% if wish_obj.link %}
+                    <p class="card-text">
+                        <strong>Link:</strong><br>
+                        <a href="{{ wish_obj.link }}" target="_blank" class="text-decoration-none">
+                            {{ wish_obj.link }}
+                        </a>
+                    </p>
+                    {% endif %}
+                </div>
+
+                <div class="card-footer d-flex justify-content-between">
+                    <a href="{{ wish_obj.link }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                        Visit Link
+                    </a>
+
+                    <!-- Future buttons -->
+                    <div>
+                        <button class="btn btn-outline-secondary btn-sm" disabled>
+                            Edit
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm" disabled>
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{#
+blueprints/wishlist/templates/wishlist/new_wish_item.html
+in this file i will shows the form to shows user to enter
+the wishlist values to pass here
+#}
+
+{% extends 'base_file.html' %}
+
+{% block my_title %}
+Make A New Wish Item To Store
+{% endblock %}
+
+
+{% block my_content %}
+<h1>Write Your Wish Below</h1>
+
+<form action="" method="post">
+    {{form.hidden_tag() }}
+
+    <div class="mb-2">
+        {{ form.name.label }}
+        {{ form.name() }}
+    </div>
+
+
+    <div class="mb-2">
+        {{ form.price.label }}
+        {{ form.price() }}
+    </div>
+
+
+    <div class="mb-2">
+        {{ form.link.label }}
+        {{ form.link() }}
+    </div>
+
+
+    <div class="mb-2">
+        {{ form.submit() }}
+    </div>
+
+</form>
+
+
+
+{% endblock %}

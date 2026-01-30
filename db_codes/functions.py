@@ -137,3 +137,53 @@ def add_new_wish_item(
         session.commit()
         session.refresh(wish_obj)
     return wish_obj
+
+
+def add_one_wish_item_for_a_user(
+    db_engine: Engine,
+    username: str,
+    wish_name: str,
+    wish_price: float,
+    wish_link: str,
+) -> WishItemModel | None:
+    """
+    If the wish item has insert successfully it will return the wish model obj else None
+    Here i will pass the username of the user against whom i want to add
+    some wish items list so i will do it here
+    """
+    wish_item_obj = WishItemModel(
+        name=wish_name,
+        price=wish_price,
+        link=wish_link,
+    )
+    with Session(db_engine) as session:
+        statement = select(UserModel).where(UserModel.username == username)
+        results = session.exec(statement=statement)
+        user_obj = results.one_or_none()
+        if not user_obj:
+            return None
+        # i need to hink return somethign else, as when user will not has any wish items it should return None or empty list both will same not Noen i am confused
+        user_obj.wish_items.append(wish_item_obj)
+        session.add(user_obj)
+        session.commit()
+        session.refresh(wish_item_obj)
+        return wish_item_obj
+
+
+def get_all_wish_items_for_a_user(
+    db_engine: Engine,
+    username: str,
+) -> list[WishItemModel] | None:
+    """
+    here i will pass the username and it will return all the wishitems he owns
+    then i think to iterate over those items and get a somethign to shows users
+    """
+    with Session(db_engine) as session:
+        statement = select(UserModel).where(UserModel.username == username)
+        results = session.exec(statement=statement)
+        user_obj = results.one_or_none()
+        if not user_obj:
+            return None
+
+        all_wish_items = user_obj.wish_items
+        return all_wish_items

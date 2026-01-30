@@ -55,7 +55,7 @@ def register():
 
         first_name = form.first_name.data
         username = form.username.data
-        password = form.username.data
+        password = form.password.data
 
         # I make this below part just for adding one extra validation which i though
         # can be problem i need to think about this what is the problme or solution later
