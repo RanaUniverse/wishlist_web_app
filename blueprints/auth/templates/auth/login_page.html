@@ -15,48 +15,68 @@ Let's Login Your Account
 {% block my_content %}
 
 
-
-
 <div class="
 container
-border border-5 border-info
-w-50
 ">
-    <form action="" method="post">
+    <div class="row justify-content-center">
 
-        {{ form.hidden_tag() }}
+        <div class="col-12 col-sm-10 col-md-6 col-lg-4
+                    border border-3 border-info rounded
+                    p-4 mt-4">
 
-        <h1 class="h3 mb-5 fw-bold text-center">👇 Please sign in 👇</h1>
 
-        <div class="m-3 form-floating">
+            <form action="" method="post">
 
-            {% if focus_password %}
-            {{ form.username(class="form-control w-50") }}
-            {% else %}
-            {{ form.username(class="form-control w-50", autofocus=True) }}
-            {% endif %}
+                {{ form.hidden_tag() }}
 
-            {{ form.username.label() }}
+                <h1 class="h3 mb-5 fw-bold text-center">👇 Please sign in 👇</h1>
+
+                <div class="mb-3 form-floating">
+
+                    {% if focus_password %}
+                    {{ form.username(class="form-control") }}
+                    {% else %}
+                    {{ form.username(class="form-control", autofocus=True) }}
+                    {% endif %}
+
+                    {{ form.username.label() }}
+                </div>
+
+                <div class="mb-3 form-floating">
+
+                    {% if focus_password %}
+                    {{ form.password(class="form-control", autofocus=True) }}
+                    {% else %}
+                    {{ form.password(class="form-control") }}
+                    {% endif %}
+
+                    {{ form.password.label() }}
+                </div>
+
+                {#
+                this button is like a input>type=submit, so i was not get the idea of what i will use
+                {{ form.submit() }}
+                #}
+
+                <button class="btn btn-primary w-100 py-2" type="submit">
+                    Log in
+                </button>
+
+
+                <div class="mt-4 text-center">
+                    <span class="text-muted">
+                        Don't Have Any Account?
+                    </span>
+                    <a href="{{ url_for('auth_bp.register') }}">
+                        Register Here
+                    </a>
+                </div>
+
+
+            </form>
         </div>
+    </div>
 
-        <div class="m-3 form-floating">
-
-            {% if focus_password %}
-            {{ form.password(class="form-control w-50", autofocus=True) }}
-            {% else %}
-            {{ form.password(class="form-control w-50") }}
-            {% endif %}
-
-            {{ form.password.label() }}
-        </div>
-
-        <!-- {{ form.submit() }} -->
-        <div class="m-3">
-            <button class="btn btn-primary w-50 py-2" type="submit">Log in</button>
-        </div>
-
-
-    </form>
 </div>
 
 

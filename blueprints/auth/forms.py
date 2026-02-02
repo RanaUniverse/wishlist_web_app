@@ -28,6 +28,7 @@ class RegisterForm(FlaskForm):
     last_name = StringField(
         label="Last Name",
         validators=[Optional()],
+        render_kw={"placeholder": "YOu can enter the last name."},
     )
     phone_no = StringField(
         label="Phone Number",
@@ -35,12 +36,12 @@ class RegisterForm(FlaskForm):
         render_kw={"placeholder": "Example: +91 9876598765"},
     )
     username = StringField(
-        label="Unique Username",
+        label="Choose A Username",
         validators=[DataRequired(), Length(min=3, max=20)],
         render_kw={"placeholder": "Must Need (Minimum 3 Characters)"},
     )
     password = PasswordField(
-        label="Password",
+        label="Select A Strong Password",
         validators=[
             DataRequired(),
             Length(
@@ -68,4 +69,6 @@ class LoginForm(FlaskForm):
         ],
         render_kw={"placeholder": "What is Your Password"},
     )
-    submit = SubmitField(label="Login Now")
+    submit = SubmitField(
+        label="Login Now",
+    )

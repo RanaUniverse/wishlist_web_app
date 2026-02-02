@@ -11,55 +11,63 @@ Register For a new Account
 
 
 {% block my_content %}
-<h1 class="m-4 text-center">Register Your new account here</h1>
-<hr class="border-5 border-danger">
 
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-6 col-lg-4
+        border border-3 rounded border-info">
+            <form action="" method="post">
 
-<form action="" method="post">
+                {{ form.hidden_tag() }}
 
-    {{ form.hidden_tag() }}
+                <h1 class="h5 mb-5 fw-bold text-center">
+                    👇 Please Enter Your Details 👇
+                </h1>
 
-    <div class="mb-2">
-        {{ form.first_name.label(class="form-label fw-bold") }}
-        {{ form.first_name(class="form-control w-50") }}
+                <div class="mb-3 form-floating">
+                    {{form.first_name(class="form-control")}}
+                    {{form.first_name.label()}}
+                </div>
+
+                <div class="mb-3 form-floating">
+                    {{form.last_name(class="form-control")}}
+                    {{form.last_name.label()}}
+                </div>
+
+                <div class="mb-3 form-floating">
+                    {{form.phone_no(class="form-control")}}
+                    {{form.phone_no.label()}}
+                </div>
+
+                <div class="mb-3 form-floating">
+                    {{form.username(class="form-control")}}
+                    {{form.username.label()}}
+                </div>
+
+                <div class="mb-3 form-floating">
+                    {{form.password(class="form-control")}}
+                    {{form.password.label()}}
+                </div>
+
+                <button class="btn btn-primary w-100 py-2" type="submit">
+                    Register Your Account
+                </button>
+
+                <button class="btn btn-secondary center w-50 my-1" type="reset">
+                    Refill The Form
+                </button>
+
+                <div class="mt-4 text-center">
+                    <span class="text-muted">
+                        Already Have an Account?
+                    </span>
+                    <a href="{{url_for('auth_bp.login')}}">
+                        Login Here
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <div class="mb-2">
-        {{ form.last_name.label(class="form-label fw-bold") }}
-        {{ form.last_name(class="form-control w-50") }}
-    </div>
-
-    <div class="mb-2">
-        {{ form.phone_no.label(class="form-label fw-bold") }}
-        {{ form.phone_no(class="form-control w-50") }}
-    </div>
-
-    <div class="mb-2">
-        {{ form.username.label(class="form-label fw-bold") }}
-        {{ form.username(class="form-control w-50") }}
-
-        {% for error in form.username.errors %}
-        <div class="text-danger small">{{ error }}</div>
-        {% endfor %}
-
-    </div>
-
-    <div class="mb-2">
-        {{ form.password.label(class="form-label fw-bold") }}
-        {{ form.password(class="form-control w-50") }}
-
-        {% for error in form.password.errors %}
-        <div class="text-danger small">{{ error }}</div>
-        {% endfor %}
-
-    </div>
-
-    {{ form.submit() }}
-
-</form>
-
-
-
-
+</div>
 
 {% endblock %}
