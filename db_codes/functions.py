@@ -124,33 +124,6 @@ def add_new_user(
             return None
 
 
-def add_new_wish_item(
-    db_engine: Engine,
-    name: str,
-    price: float,
-    link: str,
-    username: str,
-):
-
-    with Session(db_engine) as session:
-        user_obj = find_user_obj_from_username(
-            db_engine=db_engine,
-            username=username,
-        )
-        if not user_obj:
-            return None
-        wish_obj = WishItemModel(
-            name=name,
-            price=price,
-            link=link,
-            user=user_obj,
-        )
-        session.add(wish_obj)
-        session.commit()
-        session.refresh(wish_obj)
-    return wish_obj
-
-
 def add_one_wish_item_for_a_user(
     db_engine: Engine,
     username: str,
@@ -162,6 +135,7 @@ def add_one_wish_item_for_a_user(
     If the wish item has insert successfully it will return the wish model obj else None
     Here i will pass the username of the user against whom i want to add
     some wish items list so i will do it here
+    i need to make ti try except like this
     """
     wish_item_obj = WishItemModel(
         name=wish_name,
@@ -181,6 +155,23 @@ def add_one_wish_item_for_a_user(
         session.refresh(wish_item_obj)
         return wish_item_obj
 
+
+def get_wish_item_info(
+    db_engine: Engine,
+    wish_uuid: str,
+) -> WishItemModel | None:
+    """
+    i want to pass the  wish item's  uuid
+    and it should return the wish_model obj else none
+    """
+    with Session(db_engine) as session:
+        statement = select(WishItemModel).where(WishItemModel.uuid == wish_uuid)
+        results = session.exec(statement=statement)
+        wish_obj = results.one_or_none()
+        return wish_obj
+    
+
+    
 
 def get_all_wish_items_for_a_user(
     db_engine: Engine,
@@ -209,6 +200,10 @@ def delete_wish_item(
     """
     It will try to delete the wishitem by taking its uuid and user_id which is id_
     column's value and it will try to return true if success
+    What Raise it can be
+    WishItemNotFound
+    WishItemOwnerNotMatch
+    WishItemUnknownError
     """
 
     try:
@@ -224,6 +219,80 @@ def delete_wish_item(
                 session.delete(wish_obj)
                 session.commit()
                 return True
+
+            else:
+                raise WishItemOwnerNotMatch()
+
+    except (WishItemNotFound, WishItemOwnerNotMatch):
+        raise
+
+    except Exception as e:
+        logger.warning(msg="Somethigns wrong happens outside the custom error, " f"{e}")
+        raise WishItemUnknownError() from e
+
+
+def add_new_wish_item(
+    db_engine: Engine,
+    name: str,
+    price: float,
+    link: str,
+    username: str,
+):
+
+    with Session(db_engine) as session:
+        user_obj = find_user_obj_from_username(
+            db_engine=db_engine,
+            username=username,
+        )
+        if not user_obj:
+            return None
+        wish_obj = WishItemModel(
+            name=name,
+            price=price,
+            link=link,
+            user=user_obj,
+        )
+        session.add(wish_obj)
+        session.commit()
+        session.refresh(wish_obj)
+    return wish_obj
+
+
+def edit_old_wish_item(
+    db_engine: Engine,
+    wish_uuid: str,
+    user_id: int,
+    new_name: str,
+    new_price: int,
+    new_link: str,
+):
+    """
+    i want if the edit was successfull it will return the wishitemmodel
+    else it can raise some error or maybe none i need to think this
+    It will try to edit the row of wish_item and then if any problem
+    What Raise it can be
+    WishItemNotFound
+    WishItemOwnerNotMatch
+    WishItemUnknownError
+    """
+
+    try:
+        with Session(db_engine) as session:
+            statement = select(WishItemModel).where(WishItemModel.uuid == wish_uuid)
+            results = session.exec(statement=statement)
+            wish_obj = results.one_or_none()
+
+            if not wish_obj:
+                raise WishItemNotFound()
+
+            if wish_obj.user_id == user_id:
+                wish_obj.name = new_name
+                wish_obj.price = new_price
+                wish_obj.link = new_link
+                session.add(wish_obj)
+                session.commit()
+                session.refresh(wish_obj)
+                return wish_obj
 
             else:
                 raise WishItemOwnerNotMatch()
