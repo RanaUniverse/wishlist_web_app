@@ -10,6 +10,7 @@ from flask import (
     flash,
     render_template,
     redirect,
+    session,
     url_for,
 )
 
@@ -109,26 +110,35 @@ def register():
         else:
             # means the new_user has been successfully insert in the db
             # i am now showing the data later i will need to use the db below
+            session["prefill_login_username"] = username
             flash(
-                message="You Have Been Registerd Successfully Now...",
+                message="Hello "
+                f"{first_name},"
+                "You Have Been Registerd Successfully Now...",
                 category="info",
             )
             flash(
-                message="After You fill the register page here should be a validate or otp verifiction like thigns, for now the verification process has not been made yet. It asumes that you have successfully register so please try to register here belwo with the passowrd you have entered.",
+                message=(
+                    "Registration successful! ✅ "
+                    "Email/OTP verification is not enabled yet (testing mode). "
+                    "Please log in with the credentials you just created."
+                ),
                 category="success",
-            )
-            flash(
-                message=f"Current Account's Usernaem:- `{username}`",
-                category="info",
             )
             return redirect(url_for("auth_bp.login"))
 
     # This else part is when i get a /register Get from user
     else:
+        if form.errors:
+            flash(
+                message="Please fillup the fields correctly...",
+                category="danger",
+            )
         flash(
             message="Let's Create Your Account",
             category="primary",
         )
+
         return render_template(
             template_name_or_list="auth/register_page.html",
             form=form,
@@ -145,6 +155,7 @@ def login():
     where user will write the username and password
     """
     form = LoginForm()
+    focus_password = False
 
     if form.validate_on_submit():  # type: ignore
         username = form.username.data
@@ -179,10 +190,18 @@ def login():
             )
             return redirect(url_for("general_bp.profile"))
 
+    prefill_username = session.pop("prefill_login_username", None)
+    if prefill_username:
+        form.username.data = prefill_username
+        focus_password = True
+    # I make this so that it will inject the value in the username field if this
+    # is came from teh register where i have make the value of prefill_login_username value
+
     # This is when i will get Get Response
     return render_template(
         template_name_or_list="auth/login_page.html",
         form=form,
+        focus_password=focus_password
     )
 
 

@@ -37,11 +37,21 @@ Register For a new Account
     <div class="mb-2">
         {{ form.username.label(class="form-label fw-bold") }}
         {{ form.username(class="form-control w-50") }}
+
+        {% for error in form.username.errors %}
+        <div class="text-danger small">{{ error }}</div>
+        {% endfor %}
+
     </div>
 
     <div class="mb-2">
         {{ form.password.label(class="form-label fw-bold") }}
         {{ form.password(class="form-control w-50") }}
+
+        {% for error in form.password.errors %}
+        <div class="text-danger small">{{ error }}</div>
+        {% endfor %}
+
     </div>
 
     {{ form.submit() }}
