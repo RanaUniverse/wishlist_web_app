@@ -20,8 +20,10 @@ Your Profile will Shows here
     <h1 class="mb-0">👤 Your Profile</h1>
 </div>
 
-<div type="'button" class="btn btn-warning">
-    <a href="{{url_for('auth_bp.logout')}}">Logout Here</a>
+<div class="container text-center py-1">
+    <div type="'button" class="btn btn-warning">
+        <a href="{{url_for('auth_bp.logout')}}">Logout Here</a>
+    </div>
 </div>
 
 
@@ -37,16 +39,12 @@ Your Profile will Shows here
     {% if current_user.phone_no %}
     <li><strong>Phone:</strong> {{ current_user.phone_no }}</li>
     {% else %}
-    <strike>
-        <li><strong>Phone:</strong> Not Provided Yet</li>
-    </strike>
+    <li><strong>Phone:</strong> Not Provided Yet</li>
     {% endif %}
-
-    <li><strong>User ID:</strong> {{ current_user.id_ }}</li>
 
 
     <div class="card-header bg-warning text-white text-center">
-        📌 Wishlists coming soon...
+        📌 Wishlists coming soon... (See in Dropdown)
     </div>
 
 </ul>

@@ -15,6 +15,13 @@ My Wish Item
     Please See The Wish You have made Below:
 </h1>
 
+<div class="d-flex justify-content-center gap-3 mt-4 mb-3">
+    <a href="{{ url_for('wishlist_bp.add_wishitem') }}" class="btn btn-primary btn-lg">
+        Add Another Wish Here
+    </a>
+</div>
+
+
 {% include '/wishlist/partials/_wish_card.html' %}
 
 {% endblock %}
