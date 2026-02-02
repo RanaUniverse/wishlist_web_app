@@ -1,0 +1,39 @@
+{#
+blueprints/wishlist/templates/wishlist/all_wish_item.html
+This html file will shows all the wishes the user has own
+#}
+
+{% extends 'base_file.html' %}
+
+{% block my_title %}
+See All Your Wishes
+{% endblock %}
+
+{% block my_content %}
+
+<div class="h1 my-5 text-center fw-bold text-info">
+    ✨ Your Wish Items ✨
+</div>
+
+
+
+{% for one_wish in all_wishes %}
+{% set numbering = loop.index ~ ": " %}
+<div class="my-3">
+    {% include 'wishlist/partials/_wish_card.html' %}
+</div>
+
+{% else %}
+<div class="alert alert-info text-center my-5">
+    <p class="fw-bold mb-2">You have no wishes yet 😢</p>
+    <p>Create your first wish below ✨ (Coming soon…)</p>
+    <a href="{{url_for('wishlist_bp.add_wishitem')}}" class="btn btn-primary btn-lg mt-3">
+        Make Your First Wish Here
+    </a>
+</div>
+
+{% endfor %}
+
+
+
+{% endblock %}

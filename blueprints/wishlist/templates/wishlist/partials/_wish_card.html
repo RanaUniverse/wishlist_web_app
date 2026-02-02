@@ -1,0 +1,50 @@
+{#
+blueprints/wishlist/templates/wishlist/partials/_wish_card.html
+This is the part here i will write for one card and later it will
+be used in others to call easily
+#}
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-8 col-md-6">
+            <div class="card border-info">
+                <div class="card-header bg-primary text-center text-white">
+                    <span class="badge bg-light text-primary me-2">
+                        {{ numbering }}
+                    </span>
+                    🎁 This is Your Wish Item 🎁
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title fw-bold">
+                        {{ one_wish.name }}
+                    </h4>
+
+                    <p class="card-text">
+                        <strong>Price:</strong>
+                        ₹ {{ one_wish.price }}
+                    </p>
+
+                    <p class="card-text my-4 me-2">
+                        {{ one_wish.link }}
+                    </p>
+
+                    <div class="d-flex justify-content-between fw-bold">
+                        <a href="{{url_for('wishlist_bp.edit_wishitem', uuid=one_wish.uuid)}}"
+                            class="card-link text-decoration-none">
+                            ✏️ Edit This Wish
+                        </a>
+                        <a href="{{url_for('wishlist_bp.delete_wishitem', uuid=one_wish.uuid)}}"
+                            class="card-link text-decoration-none text-danger">
+                            🗑 Delete This Wish
+                        </a>
+                    </div>
+
+                </div>
+                <div class="card-footer text-muted text-end">
+                    99 Days Ago (Not Implimented)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -33,3 +33,20 @@ def handle_bad_request(error: HTTPException):
         ),
         400,
     )
+
+
+@error_bp.app_errorhandler(401)
+def handle_401(error: HTTPException):
+
+    print("Thsi 401 running")
+    if error.description != BadRequest.description:
+        show_msg = error.description
+    else:
+        show_msg = None
+    return (
+        render_template(
+            template_name_or_list="error/401.html",
+            shws_msg=show_msg,
+        ),
+        401,
+    )

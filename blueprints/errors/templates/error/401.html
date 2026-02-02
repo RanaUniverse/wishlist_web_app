@@ -1,0 +1,25 @@
+{#
+This is
+blueprint/errors/templates/401.html file
+i make this to write the unauthorized html page for now simple
+#}
+
+
+{% extends 'base_file.html' %}
+
+{% block my_title %}
+Unauthorized Problem
+{% endblock %}
+
+{% block my_content %}
+<h1>You are not authorized to use this</h1>
+<h1>401 Error</h1>
+<h5>If you sure here is some problem please reach the team</h5>
+
+
+
+{% if show_msg %}
+{{show_msg}}
+{% endif %}
+
+{% endblock %}

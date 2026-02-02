@@ -62,11 +62,3 @@ def profile():
     return render_template(
         template_name_or_list="general/profile_page.html",
     )
-
-
-@general_bp.route("/ranauniverse")
-@general_bp.route("/r")
-def rana_universe():
-    return render_template(
-        template_name_or_list="general/rana_universe.html",
-    )

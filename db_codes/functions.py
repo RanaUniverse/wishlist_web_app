@@ -14,6 +14,20 @@ from db_codes.models import UserModel, WishItemModel
 from utils.custom_logger import logger
 
 
+class WishItemNotFound(Exception):
+    pass
+
+
+class WishItemOwnerNotMatch(Exception):
+    pass
+
+
+class WishItemUnknownError(Exception):
+    """Something went wrong in the DB layer that is not covered by other custom errors."""
+
+    pass
+
+
 def verify_login_credentials(
     db_engine: Engine,
     username: str,
@@ -29,17 +43,15 @@ def verify_login_credentials(
         user_obj = results.one_or_none()
 
         if not user_obj:
-            logger.info(f"{username} is not present in the user table.")
+            logger.info(f"`{username}` is not present in the user table.")
             return None
 
         if user_obj.password == password:
-            logger.debug(
-                f"{username} and the password has been matched now for some way"
-            )
+            logger.debug(f"`{username}` and the `password` Has Been Matched Now...")
             return user_obj
 
         else:
-            logger.info(f"{username} and password not matched now.")
+            logger.info(f"`{username}` and `password` not matched now.")
             return None
 
 
@@ -172,14 +184,14 @@ def add_one_wish_item_for_a_user(
 
 def get_all_wish_items_for_a_user(
     db_engine: Engine,
-    username: str,
+    user_id: int,
 ) -> list[WishItemModel] | None:
     """
     here i will pass the username and it will return all the wishitems he owns
     then i think to iterate over those items and get a somethign to shows users
     """
     with Session(db_engine) as session:
-        statement = select(UserModel).where(UserModel.username == username)
+        statement = select(UserModel).where(UserModel.id_ == user_id)
         results = session.exec(statement=statement)
         user_obj = results.one_or_none()
         if not user_obj:
@@ -187,3 +199,38 @@ def get_all_wish_items_for_a_user(
 
         all_wish_items = user_obj.wish_items
         return all_wish_items
+
+
+def delete_wish_item(
+    db_engine: Engine,
+    wish_uuid: str,
+    user_id: int,
+):
+    """
+    It will try to delete the wishitem by taking its uuid and user_id which is id_
+    column's value and it will try to return true if success
+    """
+
+    try:
+        with Session(db_engine) as session:
+            statement = select(WishItemModel).where(WishItemModel.uuid == wish_uuid)
+            results = session.exec(statement=statement)
+            wish_obj = results.one_or_none()
+
+            if not wish_obj:
+                raise WishItemNotFound()
+
+            if wish_obj.user_id == user_id:
+                session.delete(wish_obj)
+                session.commit()
+                return True
+
+            else:
+                raise WishItemOwnerNotMatch()
+
+    except (WishItemNotFound, WishItemOwnerNotMatch):
+        raise
+
+    except Exception as e:
+        logger.warning(msg="Somethigns wrong happens outside the custom error, " f"{e}")
+        raise WishItemUnknownError() from e
