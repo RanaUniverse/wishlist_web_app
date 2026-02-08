@@ -24,6 +24,12 @@ Wishlist Website
                 👉 Open the <strong>navigation dropdown menu</strong> to explore This Websiet.
             </div>
 
+
+            {% if current_user.is_authenticated %}
+            <div class="btn btn-primary">
+                You are already registered and logged in successfully ✅🎉 </div>
+
+            {% else %}
             <div class="d-flex justify-content-center gap-3 mt-4">
                 <a href="{{ url_for('auth_bp.login') }}" class="btn btn-primary btn-lg">
                     Login
@@ -32,6 +38,8 @@ Wishlist Website
                     Register
                 </a>
             </div>
+
+            {% endif %}
 
         </div>
     </div>

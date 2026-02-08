@@ -296,6 +296,7 @@ def edit_wishitem(uuid: str):
     form.name.data = wish_obj.name
     form.price.data = wish_obj.price  # type: ignore
     form.link.data = wish_obj.link
+
     flash(
         message="You can Edit your wish item below",
         category="success",

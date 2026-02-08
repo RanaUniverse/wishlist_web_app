@@ -18,6 +18,7 @@ from flask_login import (  # type: ignore
     login_user,  # type: ignore
     login_required,  # type: ignore
     logout_user,
+    current_user,
 )
 
 
@@ -128,21 +129,32 @@ def register():
             return redirect(url_for("auth_bp.login"))
 
     # This else part is when i get a /register Get from user
-    else:
-        if form.errors:
-            flash(
-                message="Please fillup the fields correctly...",
-                category="danger",
-            )
-        flash(
-            message="Let's Create Your Account",
-            category="primary",
-        )
 
-        return render_template(
-            template_name_or_list="auth/register_page.html",
-            form=form,
+    if current_user.is_authenticated:
+        flash(
+            "You are already registerd and login here successfully beforehand 🟩",
+            "info",
         )
+        flash(
+            "If you want to switch accounts and register one, please logout first.",
+            "warning",
+        )
+        return redirect(url_for("general_bp.profile"))
+
+    if form.errors:
+        flash(
+            message="Please fillup the fields correctly...",
+            category="danger",
+        )
+    flash(
+        message="Let's Create Your Account",
+        category="primary",
+    )
+
+    return render_template(
+        template_name_or_list="auth/register_page.html",
+        form=form,
+    )
 
 
 @auth_bp.route(
@@ -198,10 +210,21 @@ def login():
     # is came from teh register where i have make the value of prefill_login_username value
 
     # This is when i will get Get Response
+    if current_user.is_authenticated:
+        flash(
+            "You are already logged in ✅ You cannot login again. ",
+            "info",
+        )
+        flash(
+            "If you want to switch accounts, please logout first.",
+            "warning",
+        )
+        return redirect(url_for("general_bp.profile"))
+
     return render_template(
         template_name_or_list="auth/login_page.html",
         form=form,
-        focus_password=focus_password
+        focus_password=focus_password,
     )
 
 
