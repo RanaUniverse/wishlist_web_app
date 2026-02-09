@@ -1,0 +1,139 @@
+<!-- zzzrana.html is the file i make this for some testing only -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Rana Universe</title>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"> -->
+    <!-- <link rel="stylesheet" href="static/icons/bs_icons/font/bootstrap-icons.min.css"> -->
+    <link rel="stylesheet" href="static/icons/bs_icons/bootstrap-icons.min.css">
+
+</head>
+
+<body>
+
+    <h1>Rana Universe</h1>
+    <input type="password" id="passField" value="Random Password">
+    <br>
+
+    <div style="cursor: pointer;" onclick="PassShowHideFun()">
+        <i id="eyeIcon" class="bi bi-eye"></i>
+        <span>
+            Show / Hide Password
+        </span>
+    </div>
+
+
+    <br><br>
+    <button id="toggle">Change Theme</button>
+    <hr>
+
+    <script>
+        function PassShowHideFun() {
+            var x = document.getElementById("passField")
+            var icon = document.getElementById("eyeIcon")
+            if (x.type === "password") {
+                x.type = "text"
+                icon.className = "bi bi-eye-slash"
+            } else {
+                x.type = "password"
+                icon.className = "bi bi-eye"
+            }
+        }
+
+
+        const btn = document.querySelector("#toggle")
+        const body = document.body
+
+        const baseThemeButtonText = btn.textContent
+
+        let isDark = false;
+
+        btn.addEventListener("click", () => {
+            if (isDark === false) {
+                body.style.backgroundColor = "black"
+                body.style.color = "white"
+                isDark = true
+                btn.textContent = baseThemeButtonText + " (Switch to Light 🌞)"
+                // first this upper codes looks wrong but by thinking it is right now
+
+            } else {
+                body.style.backgroundColor = "white"
+                body.style.color = "black"
+                isDark = false
+                btn.textContent = baseThemeButtonText + " (Switch to Dark 🌙)"
+            }
+        })
+    </script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <button>Click me</button>
+    <button>Click me 2</button>
+
+
+    <script>
+        const buttons = document.querySelectorAll("button");
+
+        buttons.forEach((btn) => {
+            btn.addEventListener("dblclick", () => {
+                alert("You double-clicked a button!");
+            });
+        });
+
+    </script> -->
+
+
+
+<!-- <input id="text" type="text">
+
+    <button>Change This</button>
+
+    <script>
+        const input = document.querySelector("#text")
+        const btn = document.querySelector("button")
+        btn.addEventListener("click", () => {
+            if (input.value.trim() === "") {
+                alert("Please Enter Somethigns")
+            } else {
+                alert(input.value.toUpperCase())
+            }
+        })
+
+
+    </script>
+ -->
+
+
+
+
+<!-- <h1 id="title">Hello World</h1>
+    <br>
+    <button>Change The Text</button>
+
+
+    <script>
+        const heading = document.querySelector("#title")
+        const button = document.querySelector("button")
+
+        button.addEventListener("click", () => {
+            heading.textContent = "Text Changes Instantly!"
+        })
+    </script> -->
