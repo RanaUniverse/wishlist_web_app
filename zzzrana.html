@@ -1,28 +1,35 @@
-<!-- zzzrana.html is the file i make this for some testing only -->
+<!-- zzzrana.html is the file i make this for some testing only  
+this file is made for testing and so on only for different thigs
+-->
 
 <!DOCTYPE html>
 <html>
 
 <head>
     <title>Rana Universe</title>
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"> -->
-    <!-- <link rel="stylesheet" href="static/icons/bs_icons/font/bootstrap-icons.min.css"> -->
     <link rel="stylesheet" href="static/icons/bs_icons/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
 
 </head>
 
 <body>
 
     <h1>Rana Universe</h1>
-    <input type="password" id="passField" value="Random Password">
-    <br>
 
-    <div style="cursor: pointer;" onclick="PassShowHideFun()">
-        <i id="eyeIcon" class="bi bi-eye"></i>
-        <span>
-            Show / Hide Password
-        </span>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-6 col-lg-4">
+            <div class="input-group px-3">
+                <input type="password" class="form-control" id="passField" placeholder="password"
+                    value="Random Password">
+                <button type="button" class="btn input-group-text border" onclick="PassShowHideFun()">
+                    <i id="eyeIcon" class="bi bi-eye"></i>
+                </button>
+            </div>
+        </div>
     </div>
+
+
 
 
     <br><br>
