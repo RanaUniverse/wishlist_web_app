@@ -13,8 +13,6 @@ Let's Login Your Account
 {% endblock %}
 
 {% block my_content %}
-
-
 <div class="
 container
 ">
@@ -32,7 +30,6 @@ container
                 <h1 class="h3 mb-5 fw-bold text-center">👇 Please sign in 👇</h1>
 
                 <div class="mb-3 form-floating">
-
                     {% if focus_password %}
                     {{ form.username(class="form-control") }}
                     {% else %}
@@ -42,16 +39,27 @@ container
                     {{ form.username.label() }}
                 </div>
 
-                <div class="mb-3 form-floating">
 
-                    {% if focus_password %}
-                    {{ form.password(class="form-control", autofocus=True) }}
-                    {% else %}
-                    {{ form.password(class="form-control") }}
-                    {% endif %}
 
-                    {{ form.password.label() }}
+                <div class="input-group mb-3">
+                    <div class="form-floating">
+
+                        {% if focus_password %}
+                        {{ form.password(class="form-control", autofocus=True) }}
+                        {% else %}
+                        {{ form.password(class="form-control") }}
+                        {% endif %}
+
+                        {{ form.password.label() }}
+                    </div>
+                    <button type="button" class="input-group-text btn border btn-outline-primary"
+                        onclick="PassShowHideFun()">
+                        <i id="eyeIcon" class="bi bi-eye"></i>
+                    </button>
                 </div>
+
+
+
 
                 {#
                 this button is like a input>type=submit, so i was not get the idea of what i will use
@@ -78,20 +86,21 @@ container
     </div>
 
 </div>
+{% endblock %}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+{% block custom_script %}
+<script>
+    function PassShowHideFun() {
+        var x = document.getElementById("password")
+        var icon = document.getElementById("eyeIcon")
+        if (x.type === "password") {
+            x.type = "text"
+            icon.className = "bi bi-eye-slash"
+        } else {
+            x.type = "password"
+            icon.className = "bi bi-eye"
+        }
+    }
+</script>
 {% endblock %}

@@ -63,7 +63,7 @@ class LoginForm(FlaskForm):
         render_kw={"placeholder": "What was your Username"},
     )
     password = PasswordField(
-        label="Password Here",
+        label="Your Password",
         validators=[
             DataRequired(),
         ],

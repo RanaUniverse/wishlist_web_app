@@ -18,6 +18,8 @@ think to extends this file
         {% endblock %}
     </title>
 
+    <link rel="stylesheet" href="{{url_for('static', filename='icons/bs_icons/bootstrap-icons.min.css')}}">
+
     <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.min.css')}}">
 
     <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}">
@@ -53,9 +55,15 @@ think to extends this file
 
     {% include 'partials/_footer.html' %}
 
+    <script src="{{url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js')}}">
+    </script>
 
-    <script src="{{url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-
+    {% block custom_script %}
+    {#
+    Here i will make any script for any page specefic i will insert
+    the js script in this place of `custom_script`
+    #}
+    {% endblock %}
 
 </body>
 
