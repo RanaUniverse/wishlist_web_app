@@ -47,5 +47,8 @@ After this register it will redirect to /login and user need to enter the right 
 ## Some Plan to impliment
 
 the username now for lowercase and uppercase are treated differently i need to make it same for upper and lower case.
+Done Successfull Upper
+
+
 
 For now on login it saves the session for lifetime i need to add the remember me or not later.

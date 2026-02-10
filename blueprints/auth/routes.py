@@ -74,6 +74,9 @@ def register():
                 template_name_or_list="auth/register_page.html",
                 form=form,
             )
+        # i am changing the username to lowercase so that it will not cause any problem
+        # of type up and down of letters in the alphabets
+        username = username.lower()
 
         existing_user = find_user_obj_from_username(
             db_engine=engine,
@@ -175,6 +178,9 @@ def login():
         if username is None or password is None:
             logger.error("Username and password is none even after the validation.")
             abort(400)
+        # i am changing the username to lowercase so that it will not cause any problem
+        # of type up and down of letters in the alphabets
+        username = username.lower()
 
         user_obj = verify_login_credentials(
             db_engine=engine,
