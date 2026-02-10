@@ -44,9 +44,15 @@ Register For a new Account
                     {{form.username.label()}}
                 </div>
 
-                <div class="mb-3 form-floating">
-                    {{form.password(class="form-control")}}
-                    {{form.password.label()}}
+                <div class="input-group mb-3">
+                    <div class="form-floating">
+                        {{ form.password(class="form-control") }}
+                        {{ form.password.label() }}
+                    </div>
+                    <button type="button" class="input-group-text btn border btn-outline-primary"
+                        onclick="PassShowHideFun()">
+                        <i id="eyeIcon" class="bi bi-eye"></i>
+                    </button>
                 </div>
 
                 <button class="btn btn-primary w-100 py-2" type="submit">
@@ -70,4 +76,9 @@ Register For a new Account
     </div>
 </div>
 
+{% endblock %}
+
+{% block custom_script %}
+<script src="{{url_for('static', filename='js/password_show_hide.js')}}">
+</script>
 {% endblock %}

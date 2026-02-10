@@ -90,17 +90,6 @@ container
 
 
 {% block custom_script %}
-<script>
-    function PassShowHideFun() {
-        var x = document.getElementById("password")
-        var icon = document.getElementById("eyeIcon")
-        if (x.type === "password") {
-            x.type = "text"
-            icon.className = "bi bi-eye-slash"
-        } else {
-            x.type = "password"
-            icon.className = "bi bi-eye"
-        }
-    }
+<script src="{{url_for('static', filename='js/password_show_hide.js')}}">
 </script>
 {% endblock %}
