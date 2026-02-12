@@ -3,6 +3,22 @@ This Repo is a Web app which need to impliment some features.
 I will start this things gradually.
 
 
+# How to use this in Docker:
+First i need to make one image and then run this as container:
+
+```
+docker build -t wishlist-web:1.0.0 .
+```
+
+```
+docker run -p 5000:5000 wishlist-web:1.0.0
+```
+
+
+
+
+# What is this app for?
+
 ```
 Its a web app, flask-based
 

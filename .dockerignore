@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+
+# Virtual environments
+.venv/
+
+# Git
+.gitignore
+
+# Logs
+*.log
+
+# Tests / experiments
+z_*
