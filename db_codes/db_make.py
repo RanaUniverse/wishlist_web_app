@@ -22,7 +22,7 @@ from utils.config_settings import SQLITE_DATABASE_FILE_NAME
 # I need to import this so that i am calling the models before calling the making of the database
 
 
-sqlite_file_path = Path.cwd() / SQLITE_DATABASE_FILE_NAME
+sqlite_file_path = Path.cwd() / "files_and_folders" / SQLITE_DATABASE_FILE_NAME
 
 sqlite_url = f"sqlite:///{sqlite_file_path}"
 

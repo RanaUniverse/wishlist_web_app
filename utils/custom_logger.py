@@ -3,6 +3,10 @@ This is utils.custom_logger.py file
 I make this for checking how this will work
 """
 
+
+from pathlib import Path
+
+
 import logging
 
 
@@ -21,7 +25,7 @@ formatter = logging.Formatter(
 
 
 file_handler = logging.FileHandler(
-    filename=LOG_FILE_NAME,
+    filename=Path("files_and_folders") / LOG_FILE_NAME,
     mode="a",
     encoding="utf-8",
 )
