@@ -16,6 +16,15 @@ docker run -p 5000:5000 wishlist-web:1.0.0
 
 
 
+# How to run in the gunicorn
+Below command i need to run after make the venv activate
+```
+source .venv/bin/activate
+```
+```
+./.venv/bin/gunicorn main:app
+```
+
 
 # What is this app for?
 

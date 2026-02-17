@@ -4,7 +4,7 @@
 
 FLASK_HOST = "0.0.0.0"
 FLASK_PORT = 5000
-FLASK_DEBUG = True
+FLASK_DEBUG = False
 
 
 SECRET_KEY = "RanaUniverse"
