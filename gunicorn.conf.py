@@ -1,7 +1,7 @@
 # gunicorn.conf.py
 
-bind = "127.0.0.1:8001"
+bind = "0.0.0.0:8001"
 
-workers = 1
+workers = 4
 threads = 1
 

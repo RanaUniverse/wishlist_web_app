@@ -1,0 +1,5 @@
+# This is the Caddyfile code it will works as a reversy proxy now
+
+localhost:2026 {
+	reverse_proxy core_app:8001
+}

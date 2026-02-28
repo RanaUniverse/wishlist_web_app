@@ -3,6 +3,17 @@ This Repo is a Web app which need to impliment some features.
 I will start this things gradually.
 
 
+# Logic for Docker compose
+
+I want to use gunicron to run this in one container, and another container 
+of caddy to run the real server to interect with the real users.
+```
+docker compose up --build
+```
+
+
+
+
 # How to use this in Docker:
 First i need to make one image and then run this as container:
 

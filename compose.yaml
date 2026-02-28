@@ -1,0 +1,26 @@
+# This is the compose.yaml file for running the docker compose
+
+services:
+  core_app:
+    build:
+      context: .
+      dockerfile: Dockerfile.core_app
+    restart: always
+    # i should not open the port of my main core_app to directly
+    # in machine so i keep it commented here to keep safe my inner application
+    # ports:
+    #   - "8002:8001"
+  
+  caddy:
+    image: caddy:2.11.1-alpine
+    restart: unless-stopped
+    ports:
+      - "2026:2026"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:
