@@ -60,8 +60,10 @@ def load_user_from_session(user_id: str):
     )
 
 
+# when gunicorn will import main it will try to make the db
+create_db_and_engine()
+
 if __name__ == "__main__":
-    create_db_and_engine()
     app.run(
         host=FLASK_HOST,
         port=FLASK_PORT,
