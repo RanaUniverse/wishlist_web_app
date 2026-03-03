@@ -10,6 +10,9 @@ services:
     # in machine so i keep it commented here to keep safe my inner application
     # ports:
     #   - "8002:8001"
+    # The database.db files are in the below directory in the container so i used this
+    volumes:
+      - sqlite_data:/rana/files_and_folders
 
   caddy:
     image: caddy:2.11.1-alpine
@@ -26,3 +29,4 @@ services:
 volumes:
   caddy_data:
   caddy_config:
+  sqlite_data:
