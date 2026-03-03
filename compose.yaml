@@ -10,12 +10,14 @@ services:
     # in machine so i keep it commented here to keep safe my inner application
     # ports:
     #   - "8002:8001"
-  
+
   caddy:
     image: caddy:2.11.1-alpine
     restart: unless-stopped
     ports:
       - "2026:2026"
+      - "80:80"
+      - "443:443"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
