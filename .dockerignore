@@ -1,3 +1,6 @@
+# This is .dockerignore file it will decide what files should not copy to workdir
+# I will try to keep only the necessary files or codes for this project
+
 # Python
 __pycache__/
 
@@ -9,6 +12,16 @@ __pycache__/
 
 # Logs
 *.log
+
+README.md
+
+webapp.env
+
+.git
+
+Caddyfile
+
+Dockerfile.core_app
 
 # Tests / experiments
 z_*
