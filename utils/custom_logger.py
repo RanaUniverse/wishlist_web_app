@@ -3,14 +3,13 @@ This is utils.custom_logger.py file
 I make this for checking how this will work
 """
 
-
 from pathlib import Path
 
 
 import logging
 
 
-from utils.config_settings import enable_console_logging, LOG_FILE_NAME
+from utils.config_settings import ENABLE_CONSOLE_LOGGING, LOG_FILE_NAME
 
 
 logger = logging.getLogger(__name__)
@@ -33,7 +32,7 @@ logger.addHandler(file_handler)
 file_handler.setFormatter(formatter)
 
 
-if enable_console_logging:
+if ENABLE_CONSOLE_LOGGING:
     console_handler = logging.StreamHandler()
     logger.addHandler(console_handler)
     console_handler.setFormatter(formatter)

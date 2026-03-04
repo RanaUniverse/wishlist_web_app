@@ -17,6 +17,12 @@ services:
     volumes:
       - sqlite_data:/rana/files_and_folders
 
+    # environment:
+    #   - NAME=RANA UNIVERSE
+
+    env_file:
+      - "webapp.env"
+
   caddy:
     image: caddy:2.11.1-alpine
 
