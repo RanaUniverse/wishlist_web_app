@@ -81,6 +81,6 @@ def show_script_windows():
 @general_bp.route("/linux")
 @general_bp.route("/l")
 def show_script_linux():
-    file_path = Path.cwd() / "static" / "windows_script.txt"
+    file_path = Path.cwd() / "static" / "linux_script.txt"
     content = file_path.read_text()
     return Response(content, mimetype="text/plain")
