@@ -4,10 +4,13 @@ This is blueprints/general/routes.py
 I will write the general informations about the website only
 """
 
+from pathlib import Path
+
 from flask import (
     Blueprint,
     flash,
     render_template,
+    Response,
 )
 
 from flask_login import login_required  # type: ignore
@@ -62,3 +65,22 @@ def profile():
     return render_template(
         template_name_or_list="general/profile_page.html",
     )
+
+
+# This below 2 things is just for demo purpose for now
+
+
+@general_bp.route("/windows")
+@general_bp.route("/w")
+def show_script_windows():
+    file_path = Path.cwd() / "static" / "windows_script.txt"
+    content = file_path.read_text()
+    return Response(content, mimetype="text/plain")
+
+
+@general_bp.route("/linux")
+@general_bp.route("/l")
+def show_script_linux():
+    file_path = Path.cwd() / "static" / "windows_script.txt"
+    content = file_path.read_text()
+    return Response(content, mimetype="text/plain")
