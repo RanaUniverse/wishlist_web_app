@@ -15,12 +15,9 @@ from db_codes.models import (
 # from utils.config_settings import SQLITE_DATABASE_FILE_NAME
 from utils.config import config_settings
 
-
 # TODO i will make somethign to make the sqlite.db file here
 
-# sqlite_file_path = Path.cwd() / "files_and_folders" / SQLITE_DATABASE_FILE_NAME
 
-# sqlite_url = f"sqlite:///{sqlite_file_path}"
 
 
 engine = create_engine(url=config_settings.db_url)

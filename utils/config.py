@@ -21,7 +21,10 @@ from pydantic_settings import (
 # the test dir is for storing the logger and normal
 # database sqlite .db file to store here
 TEST_DIR = Path("test_data")
-TEST_DIR.mkdir(parents=True, exist_ok=True)
+TEST_DIR.mkdir(
+    parents=True,
+    exist_ok=True,
+)
 
 
 class ConfigSettings(BaseSettings):
@@ -56,10 +59,24 @@ class ConfigSettings(BaseSettings):
     log_file_name: str = "web_app.log"
 
     # Database url below
-    sqlite_filename: str = "demo_data.db"
-    use_postgres: bool
+    sqlite_filename: str = "database.db"
+    # i keep below false so that by default i can use sqlite when
+    # not pass in the environment variable
+    use_postgres: bool = False
 
     database_url: PostgresDsn | None = None
+
+    @property
+    def sqlite_filepath(self) -> Path | None:
+        """
+        It will return None if he don't want to use sqlite
+        else if he want to use sqlite db its filepath will be out
+        """
+        if self.use_postgres:
+            return None
+        else:
+            sq_path = TEST_DIR / self.sqlite_filename
+            return sq_path
 
     @property
     def db_url(self) -> str:
@@ -70,8 +87,7 @@ class ConfigSettings(BaseSettings):
             return str(self.database_url)
 
         else:
-            sqlite_filepath = TEST_DIR / self.sqlite_filename
-            SQLITE_URL = f"sqlite:///" f"{sqlite_filepath}"
+            SQLITE_URL = f"sqlite:///" f"{self.sqlite_filepath}"
             return SQLITE_URL
 
 
