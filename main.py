@@ -20,13 +20,8 @@ from blueprints.wishlist.routes import wishlist_bp
 from db_codes.db_make import create_db_and_engine, engine
 from db_codes.functions import find_user_obj_from_user_id
 
-from utils.config_settings import (
-    FLASK_DEBUG,
-    FLASK_HOST,
-    FLASK_PORT,
-    SECRET_KEY,
-)
 
+from utils.config import config_settings
 
 app = Flask(
     import_name=__name__,
@@ -35,7 +30,7 @@ app = Flask(
 )
 
 
-app.config["SECRET_KEY"] = SECRET_KEY
+app.config["SECRET_KEY"] = config_settings.app_secret_key
 
 app.register_blueprint(blueprint=auth_bp)
 app.register_blueprint(blueprint=error_bp)
@@ -65,7 +60,7 @@ create_db_and_engine()
 
 if __name__ == "__main__":
     app.run(
-        host=FLASK_HOST,
-        port=FLASK_PORT,
-        debug=FLASK_DEBUG,
+        host=config_settings.app_host,
+        port=config_settings.app_port,
+        debug=config_settings.app_debug,
     )

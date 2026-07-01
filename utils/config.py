@@ -1,0 +1,86 @@
+"""
+utils/config.py
+
+Here i will write the configuration settings from the .env file
+And i will use this to take the values form the environemtn and use this
+"""
+
+from pathlib import Path
+
+
+from pydantic import (
+    Field,
+    PostgresDsn,
+)
+
+from pydantic_settings import (
+    BaseSettings,
+    SettingsConfigDict,
+)
+
+# the test dir is for storing the logger and normal
+# database sqlite .db file to store here
+TEST_DIR = Path("test_data")
+TEST_DIR.mkdir(parents=True, exist_ok=True)
+
+
+class ConfigSettings(BaseSettings):
+    """
+    Env variable settings will be here
+    """
+
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+        env_ignore_empty=True,
+    )
+
+    # Flask Related Things
+    app_host: str = Field(
+        description="This will say about the host maybe localhost or 0.0.0.0",
+    )
+    app_port: int = Field(
+        description="Port Number of 4 Digit to use here like default 5555 or 9999",
+    )
+    app_debug: bool = Field(
+        description="I should not use true in deployment, for locally i can use true",
+    )
+    app_secret_key: str = Field(
+        description="Secret key it will need by flask_login also to make encrypted thigns",
+    )
+
+    # logging related
+    enable_console_logging: bool = True
+    enable_file_logging: bool = True
+    log_file_name: str = "web_app.log"
+
+    # Database url below
+    sqlite_filename: str = "demo_data.db"
+    use_postgres: bool
+
+    database_url: PostgresDsn | None = None
+
+    @property
+    def db_url(self) -> str:
+        if self.use_postgres:
+            if self.database_url is None:
+                raise ValueError("DATABASE_URL must be set when use_postgres=True.")
+
+            return str(self.database_url)
+
+        else:
+            sqlite_filepath = TEST_DIR / self.sqlite_filename
+            SQLITE_URL = f"sqlite:///" f"{sqlite_filepath}"
+            return SQLITE_URL
+
+
+# i will use this below instance in all my needed module
+config_settings = ConfigSettings()  # type: ignore
+
+
+if __name__ == "__main__":
+    # print(config_settings)
+    # print(config_settings.app_debug)
+    # print(type(config_settings.app_debug))
+    print(config_settings.db_url)

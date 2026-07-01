@@ -8,9 +8,8 @@ from pathlib import Path
 
 import logging
 
-
-from utils.config_settings import ENABLE_CONSOLE_LOGGING, LOG_FILE_NAME
-
+# from utils.config_settings import ENABLE_CONSOLE_LOGGING, LOG_FILE_NAME
+from utils.config import config_settings
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +23,7 @@ formatter = logging.Formatter(
 
 
 file_handler = logging.FileHandler(
-    filename=Path("files_and_folders") / LOG_FILE_NAME,
+    filename=Path("files_and_folders") / config_settings.log_file_name,
     mode="a",
     encoding="utf-8",
 )
@@ -32,7 +31,7 @@ logger.addHandler(file_handler)
 file_handler.setFormatter(formatter)
 
 
-if ENABLE_CONSOLE_LOGGING:
+if config_settings.enable_console_logging:
     console_handler = logging.StreamHandler()
     logger.addHandler(console_handler)
     console_handler.setFormatter(formatter)

@@ -4,9 +4,6 @@ I need to have this fun which i need to call from this file to start working wit
 create_db_and_engine()
 """
 
-from pathlib import Path
-
-
 from sqlmodel import SQLModel, create_engine
 
 
@@ -15,19 +12,18 @@ from db_codes.models import (
     WishItemModel,  # type: ignore
 )
 
-
-from utils.config_settings import SQLITE_DATABASE_FILE_NAME
-
-
-# I need to import this so that i am calling the models before calling the making of the database
+# from utils.config_settings import SQLITE_DATABASE_FILE_NAME
+from utils.config import config_settings
 
 
-sqlite_file_path = Path.cwd() / "files_and_folders" / SQLITE_DATABASE_FILE_NAME
+# TODO i will make somethign to make the sqlite.db file here
 
-sqlite_url = f"sqlite:///{sqlite_file_path}"
+# sqlite_file_path = Path.cwd() / "files_and_folders" / SQLITE_DATABASE_FILE_NAME
+
+# sqlite_url = f"sqlite:///{sqlite_file_path}"
 
 
-engine = create_engine(url=sqlite_url)
+engine = create_engine(url=config_settings.db_url)
 
 
 def create_db_and_engine():
@@ -35,5 +31,5 @@ def create_db_and_engine():
     This will create the db file & connection with the db,
     i need to call this in the main.y
     """
-    sqlite_file_path.parent.mkdir(exist_ok=True)
+    # sqlite_file_path.parent.mkdir(exist_ok=True)
     SQLModel.metadata.create_all(engine)
