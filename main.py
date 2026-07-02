@@ -9,18 +9,15 @@ sys.dont_write_bytecode = True
 
 
 from flask import Flask
-
 from flask_login import LoginManager  # type: ignore
 
 from blueprints.auth.routes import auth_bp
-from blueprints.general.routes import general_bp
 from blueprints.errors.routes import error_bp
+from blueprints.general.routes import general_bp
+from blueprints.security.routes import security_bp
 from blueprints.wishlist.routes import wishlist_bp
-
 from db_codes.db_make import create_db_and_engine, engine
 from db_codes.functions import find_user_obj_from_user_id
-
-
 from utils.config import config_settings
 
 app = Flask(
@@ -35,6 +32,7 @@ app.config["SECRET_KEY"] = config_settings.app_secret_key
 app.register_blueprint(blueprint=auth_bp)
 app.register_blueprint(blueprint=error_bp)
 app.register_blueprint(blueprint=general_bp)
+app.register_blueprint(blueprint=security_bp)
 app.register_blueprint(blueprint=wishlist_bp)
 
 

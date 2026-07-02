@@ -6,11 +6,9 @@ modules to work some about the databases
 
 from sqlalchemy import Engine
 from sqlalchemy.exc import IntegrityError
-
 from sqlmodel import Session, select
 
 from db_codes.models import UserModel, WishItemModel
-
 from utils.custom_logger import logger
 
 
@@ -65,7 +63,9 @@ def find_user_obj_from_user_id(
     """
     with Session(db_engine) as session:
         # i think later i need to do something to check if the user_id can be make as int or not
-        statement = select(UserModel).where(UserModel.id_ == int(user_id))
+        statement = select(UserModel).where(
+            UserModel.id_ == user_id,
+        )
         results = session.exec(statement)
         user_obj = results.one_or_none()
     return user_obj
@@ -112,7 +112,7 @@ def add_new_user(
 
         except IntegrityError as e:
             logger.warning(
-                "there is some integrity problem in the username column maybe" f"{e}"
+                f"there is some integrity problem in the username column maybe{e}"
             )
             return None
 
@@ -169,9 +169,7 @@ def get_wish_item_info(
         results = session.exec(statement=statement)
         wish_obj = results.one_or_none()
         return wish_obj
-    
 
-    
 
 def get_all_wish_items_for_a_user(
     db_engine: Engine,
@@ -223,11 +221,11 @@ def delete_wish_item(
             else:
                 raise WishItemOwnerNotMatch()
 
-    except (WishItemNotFound, WishItemOwnerNotMatch):
+    except WishItemNotFound, WishItemOwnerNotMatch:
         raise
 
     except Exception as e:
-        logger.warning(msg="Somethigns wrong happens outside the custom error, " f"{e}")
+        logger.warning(msg=f"Somethigns wrong happens outside the custom error, {e}")
         raise WishItemUnknownError() from e
 
 
@@ -297,9 +295,9 @@ def edit_old_wish_item(
             else:
                 raise WishItemOwnerNotMatch()
 
-    except (WishItemNotFound, WishItemOwnerNotMatch):
+    except WishItemNotFound, WishItemOwnerNotMatch:
         raise
 
     except Exception as e:
-        logger.warning(msg="Somethigns wrong happens outside the custom error, " f"{e}")
+        logger.warning(msg=f"Somethigns wrong happens outside the custom error, {e}")
         raise WishItemUnknownError() from e
