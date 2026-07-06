@@ -10,7 +10,6 @@ from pathlib import Path
 
 from pydantic import (
     Field,
-    PostgresDsn,
 )
 
 from pydantic_settings import (
@@ -33,7 +32,7 @@ class ConfigSettings(BaseSettings):
     """
 
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=".env.webapp",
         env_file_encoding="utf-8",
         extra="ignore",
         env_ignore_empty=True,
@@ -64,7 +63,11 @@ class ConfigSettings(BaseSettings):
     # not pass in the environment variable
     use_postgres: bool = False
 
-    database_url: PostgresDsn | None = None
+    db_username: str
+    db_password: str
+    db_host: str
+    db_port: int
+    db_name: str
 
     @property
     def sqlite_filepath(self) -> Path | None:
@@ -81,13 +84,19 @@ class ConfigSettings(BaseSettings):
     @property
     def db_url(self) -> str:
         if self.use_postgres:
-            if self.database_url is None:
-                raise ValueError("DATABASE_URL must be set when use_postgres=True.")
-
-            return str(self.database_url)
+            POSTGRES_URL = (
+                f"postgresql+psycopg2://"
+                f"{self.db_username}:"
+                f"{self.db_password}@"
+                f"{self.db_host}:"
+                f"{self.db_port}/"
+                f"{self.db_name}"
+            )
+            return POSTGRES_URL
 
         else:
             SQLITE_URL = f"sqlite:///" f"{self.sqlite_filepath}"
+
             return SQLITE_URL
 
 
