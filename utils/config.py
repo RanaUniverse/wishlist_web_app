@@ -32,8 +32,6 @@ class ConfigSettings(BaseSettings):
     """
 
     model_config = SettingsConfigDict(
-        env_file=".env.webapp",
-        env_file_encoding="utf-8",
         extra="ignore",
         env_ignore_empty=True,
     )
