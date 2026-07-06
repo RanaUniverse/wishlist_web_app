@@ -1,3 +1,4 @@
+# compose.yaml
 # This is the compose.yaml file for running the docker compose
 
 services:
@@ -5,32 +6,56 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.core_app
+    restart: always
+    env_file:
+      - ".env"
+      - ".env.webapp"
+    ports:
+      - "9999:9999"
+    depends_on:
+      database:
+        condition: service_healthy
+        restart: true
+        required: true
+
+  database:
+    # image: postgres:18.4-bookworm
+    image: postgres:18.4-bookworm
 
     restart: always
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+
+    healthcheck:
+      # test: [ "CMD-SHELL", "pg_isready" ]
+      # test: [ "CMD-SHELL", "pg_isready -U ${DB_USERNAME}" ] # This will not work also
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_NAME}" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
 
     volumes:
-      - sqlite_data:/rana/files_and_folders
+      - postgres_data:/var/lib/postgresql
+  # caddy:
+  #   image: caddy:2.11.1-alpine
 
-    env_file:
-      - "webapp.env"
+  #   restart: unless-stopped
 
-  caddy:
-    image: caddy:2.11.1-alpine
+  #   ports:
+  #     - "2026:2026"
+  #     - "80:80"
+  #     - "443:443"
+  #     - "9999:9999"
 
-    restart: unless-stopped
-
-    ports:
-      - "2026:2026"
-      - "80:80"
-      - "443:443"
-      - "9999:9999"
-
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - caddy_config:/config
+  #   volumes:
+  #     - ./Caddyfile:/etc/caddy/Caddyfile
+  #     - caddy_data:/data
+  #     - caddy_config:/config
 
 volumes:
-  caddy_data:
-  caddy_config:
-  sqlite_data:
+  # caddy_data:
+  # caddy_config:
+  postgres_data:

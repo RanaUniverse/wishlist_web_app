@@ -1,11 +1,13 @@
-# ./DockerFile is this file
+# ./DockerFile.core_app
 # Below two line i got from the uv official docs
 
-FROM python:3.14-slim-trixie
+FROM python:3.14.2-slim-trixie
 
-COPY --from=ghcr.io/astral-sh/uv:0.10.9 /uv /uvx /bin/
 
-ARG APP_DIR=/rana
+COPY --from=ghcr.io/astral-sh/uv:0.11.26 /uv /uvx /bin/
+
+ARG APP_DIR=/app
+ARG APP_PORT=8001
 
 WORKDIR ${APP_DIR}
 
@@ -15,6 +17,7 @@ RUN uv sync
 
 COPY . ./
 
-EXPOSE 8001
+EXPOSE ${APP_PORT}
 
-CMD ["uv", "run", "gunicorn", "main:app"]
+
+CMD ["uv", "run", "main.py"]
