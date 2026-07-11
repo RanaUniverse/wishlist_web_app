@@ -6,8 +6,10 @@ FROM python:3.14.2-slim-trixie
 
 COPY --from=ghcr.io/astral-sh/uv:0.11.26 /uv /uvx /bin/
 
-ARG APP_DIR=/app
-ARG APP_PORT=8001
+ARG APP_DIR
+ARG APP_PORT
+# These upper values are default if any comes form 
+# docker compose env it will override uppers
 
 WORKDIR ${APP_DIR}
 
@@ -20,4 +22,7 @@ COPY . ./
 EXPOSE ${APP_PORT}
 
 
-CMD ["uv", "run", "main.py"]
+# CMD ["uv", "run", "main.py"]
+# the gunicorn setup value is coming form gunicorn.conf.py file
+# from there i will get the values from the .env file
+CMD [ "uv", "run", "gunicorn", "main:app" ]

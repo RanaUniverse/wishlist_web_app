@@ -6,12 +6,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.core_app
+      args:
+        APP_PORT: ${APP_PORT}
+        APP_DIR: ${APP_DIR}
     restart: always
     env_file:
       - ".env"
       - ".env.webapp"
     ports:
-      - "9999:9999"
+      - "${PUBLISH_PORT}:${APP_PORT}"
     depends_on:
       database:
         condition: service_healthy
@@ -36,6 +39,9 @@ services:
       timeout: 3s
       retries: 5
       start_period: 10s
+
+    ports:
+      - "5433:5432"
 
     volumes:
       - postgres_data:/var/lib/postgresql
