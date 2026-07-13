@@ -44,3 +44,9 @@ else:
 
 
 bind = f"0.0.0.0:{port_value}"
+
+timeout = 60
+max_requests = 2000
+max_requests_jitter = 100
+preload_app = True
+# This upper prload will help to reduct ram by copy already runned fork
