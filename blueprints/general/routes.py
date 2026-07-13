@@ -45,6 +45,11 @@ def index():
     )
 
 
+@general_bp.route("/health-check")
+def health():
+    return {"status": "ok"}, 200
+
+
 @general_bp.route("/about")
 def about():
     return render_template(
