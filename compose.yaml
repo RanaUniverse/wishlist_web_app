@@ -13,8 +13,16 @@ services:
     env_file:
       - ".env"
       - ".env.webapp"
-    ports:
-      - "${PUBLISH_PORT}:${APP_PORT}"
+    # i will not use port open because caddy will do this for me
+    # ports:
+    #   - "${PUBLISH_PORT}:${APP_PORT}"
+    healthcheck:
+      test: [ "CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:${APP_PORT}/health-check')" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+
     depends_on:
       database:
         condition: service_healthy
@@ -38,30 +46,39 @@ services:
       interval: 5s
       timeout: 3s
       retries: 5
-      start_period: 10s
+      start_period: 5s
 
     ports:
+      # i am exposing this port just for now in devleopment
+      # i will do this to check some postgres data there
       - "5433:5432"
 
     volumes:
       - postgres_data:/var/lib/postgresql
-  # caddy:
-  #   image: caddy:2.11.1-alpine
 
-  #   restart: unless-stopped
+  caddy:
+    image: caddy:2.11.4-alpine
+    restart: always
+    environment:
+      PUBLISH_PORT: ${PUBLISH_PORT}
+      APP_PORT: ${APP_PORT}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "${PUBLISH_PORT}:${PUBLISH_PORT}"
 
-  #   ports:
-  #     - "2026:2026"
-  #     - "80:80"
-  #     - "443:443"
-  #     - "9999:9999"
+    depends_on:
+      core_app:
+        condition: service_healthy
+        restart: true
+        required: true
 
-  #   volumes:
-  #     - ./Caddyfile:/etc/caddy/Caddyfile
-  #     - caddy_data:/data
-  #     - caddy_config:/config
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
 
 volumes:
-  # caddy_data:
-  # caddy_config:
+  caddy_data:
+  caddy_config:
   postgres_data:
