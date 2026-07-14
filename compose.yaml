@@ -10,9 +10,11 @@ services:
         APP_PORT: ${APP_PORT}
         APP_DIR: ${APP_DIR}
     restart: always
+
     env_file:
       - ".env"
       - ".env.webapp"
+
     # i will not use port open because caddy will do this for me
     # ports:
     #   - "${PUBLISH_PORT}:${APP_PORT}"
@@ -29,11 +31,15 @@ services:
         restart: true
         required: true
 
+    networks:
+      - frontend_net
+      - backend_net
+
   database:
-    # image: postgres:18.4-bookworm
     image: postgres:18.4-bookworm
 
     restart: always
+
     environment:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -56,12 +62,17 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql
 
+    networks:
+      - backend_net
+
   caddy:
     image: caddy:2.11.4-alpine
     restart: always
+
     environment:
       PUBLISH_PORT: ${PUBLISH_PORT}
       APP_PORT: ${APP_PORT}
+
     ports:
       - "80:80"
       - "443:443"
@@ -78,7 +89,15 @@ services:
       - caddy_data:/data
       - caddy_config:/config
 
+    networks:
+      - frontend_net
 volumes:
   caddy_data:
   caddy_config:
   postgres_data:
+
+networks:
+  frontend_net:
+    driver: bridge
+  backend_net:
+    driver: bridge
