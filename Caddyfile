@@ -1,5 +1,9 @@
 # This is the Caddyfile code it will works as a reversy proxy now
 
-localhost:{$PUBLISH_PORT} {
+# localhost:{$PUBLISH_PORT} {
+# 	reverse_proxy core_app:{$APP_PORT}
+# }
+
+localhost {
 	reverse_proxy core_app:{$APP_PORT}
 }

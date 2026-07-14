@@ -76,7 +76,9 @@ services:
     ports:
       - "80:80"
       - "443:443"
-      - "${PUBLISH_PORT}:${PUBLISH_PORT}"
+      - "443:443/udp"
+      # - "${PUBLISH_PORT}:${PUBLISH_PORT}"
+      # i will use upper when i will want to use specefic port
 
     depends_on:
       core_app:
